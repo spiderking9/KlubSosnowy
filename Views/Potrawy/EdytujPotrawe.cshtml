@@ -1,0 +1,71 @@
+﻿@model List<KlubSosnowy.Models.ViewModel.PotrawySkladnikiViewModel>
+
+@{
+    ViewBag.Title = "EdytujPotrawe";
+}
+
+<h2>EdytujPotrawe</h2>
+
+<div>
+    <h4>Skladniki dla zrobienia @ViewBag.NazwaPotrawy :</h4>
+    <hr />
+    <p>
+        @Html.ActionLink("Dodaj skladnik", "AddSkladnik", new { id = @ViewBag.IdPotrawy })
+    </p>
+
+    <table class="table">
+        <tr>
+            <th>
+                IdPotrawy_skladnika
+            </th>
+            <th>
+                NazwaSkladnika
+            </th>
+            <th>
+                IloscSkladnika
+            </th>
+            <th>
+                JednostkaMiary
+            </th>
+            <th>
+            </th>
+        </tr>
+        @using (Html.BeginForm("EdytujPotrawe", "Potrawy", FormMethod.Post))
+        {
+            for (var i = 0; i < Model.Count(); i++)
+            {
+                <tr>
+                    <td>
+                        @Html.Hidden("potrawySkladniki.IdPotrawy_Skladnika", @i)
+                        @Html.TextBox("potrawySkladniki[" + @i + "].IdPotrawy_Skladnika", Model[i].IdPotrawySkladnik, new { @readonly = "readonly" })
+                    </td>
+                    <td>
+                        @Html.Hidden("potrawySkladniki[" + @i + "].IdSkladnika", Model[i].IdSkladnika)
+                        @Html.TextBox("potrawySkladniki[" + @i + "].NazwaSkladnika", Model[i].NazwaSkladnika, new { @readonly = "readonly" })
+                    </td>
+                    <td>
+                        @Html.Hidden("potrawySkladniki[" + @i + "].IdPotrawy", Model[i].IdPotrawy)
+                        @Html.TextBox("potrawySkladniki[" + @i + "].Ilosc", Model[i].IloscSkladnika)
+                    </td>
+                    <td>
+                        @Html.TextBox("potrawySkladniki[" + @i + "].JednostkaMiary", Model[i].JednostkaMiary, new { @readonly = "readonly" })
+                    </td>
+                    <td>
+                        @*@Html.ActionLink("Edytuj Skladnik", "EditSkladnik", new { id = item.IdPotrawySkladnik }) |*@
+                        @*@Html.ActionLink("Details", "Details", new { id = item.IdPotrawy }) |*@
+                        @*jeszcze nie gotowe trzeba wstawic usuwanie*@
+                        @Html.ActionLink("Usun Skladnik", "DeleteSkladnik", new { id = Model[i].IdPotrawySkladnik })
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="4">
+                    <input type="submit" value="Submit" />
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

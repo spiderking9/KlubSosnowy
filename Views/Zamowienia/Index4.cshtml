@@ -1,0 +1,67 @@
+﻿@model IEnumerable<KlubSosnowy.Models.ViewModel.BankWithNip>
+
+@{
+    ViewBag.Title = "List z Xml";
+}
+
+<h2>List z Xml @ViewBag.Liczba / @ViewBag.Liczba2</h2>
+<h2>platnosc karta @ViewBag.Liczba3</h2>
+<table class="table">
+    <tr>
+        <th>
+            T
+        </th>
+        <th>
+            Data
+        </th>
+        <th>
+            Nazwa
+        </th>
+        <th>
+            Tytułem
+        </th>
+        <th>
+            Opis
+        </th>
+        <th>
+            Wyplata w PLN
+        </th>
+        <th>
+            Nip
+        </th>
+        <th>
+            id
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.T)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tytulem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Opis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WyplataWPln)
+            </td>
+                        <td>
+                @Html.DisplayFor(modelItem => item.Nip)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+        </tr>
+    }
+
+</table>

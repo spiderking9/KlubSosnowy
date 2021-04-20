@@ -1,0 +1,46 @@
+﻿@model List<KlubSosnowy.Models.ViewModel.PotrawySkladnikiViewModel>
+
+@{
+    ViewBag.Title = "Add Skladniki";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            NazwaSkladnika
+        </th>
+        <th>
+            Ilość
+        </th>
+        <th>
+            JednostkaMiary
+        </th>
+    </tr>
+
+    @using (Html.BeginForm("AddSkladnik", "Potrawy", FormMethod.Post))
+    {
+        for (var i = 0; i < Model.Count(); i++)
+        {
+            <tr>
+                <td>
+                    @Html.Hidden("potrawySkladniki[" + @i + "].IdSkladnika", Model[i].IdSkladnika)
+                    @Html.TextBox("potrawySkladniki[" + @i + "].NazwaSkladnika", Model[i].NazwaSkladnika, new { @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.Hidden("potrawySkladniki[" + @i + "].IdPotrawy", (int)ViewBag.IdPotrawy)
+                    @Html.TextBox("potrawySkladniki[" + @i + "].IloscSkladnika", Model[i].IloscSkladnika)
+                </td>
+                <td>
+                    @Html.TextBox("potrawySkladniki[" + @i + "].JednostkaMiary", Model[i].JednostkaMiary, new { @readonly = "readonly" })
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="4">
+                <input type="submit" value="Submit" />
+            </td>
+        </tr>
+    }
+</table>

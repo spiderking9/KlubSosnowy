@@ -1,0 +1,88 @@
+﻿@model List<KlubSosnowy.Models.ViewModel.PotrawyZamowieniaViewModel>
+
+@{
+    ViewBag.Title = "Zamow Potrawy";
+
+}
+
+<h2>Zamow Potrawy</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            IdPotrawy_skladnika
+        </th>
+        <th>
+            NazwaSkladnika
+        </th>
+        <th>
+            Cena
+        </th>
+        <th>
+            Ilosc
+        </th>
+        <th>
+            Suma
+        </th>
+    </tr>
+    @using (Html.BeginForm("StatusZamowienia", "Zamowienia", FormMethod.Post))
+    {
+        for (var i = 0; i < Model.Count(); i++)
+        {
+            <tr>
+                <td>
+                    @Html.Hidden($"listaZamowionychPotraw[{@i}].IdPotrawy", Model[i].IdPotrawy.ToString())
+                    @Html.Hidden($"listaZamowionychPotraw[{@i}].Nazwa", Model[i].Nazwa)
+                    @Html.Hidden($"listaZamowionychPotraw[{@i}].Cena", Model[i].Cena,new { @class = "cena" + i })
+
+                    @Html.Label(Model[i].IdPotrawy.ToString(), new { id = $"listaZamowionychPotraw[{@i}].IdPotrawy" })
+                </td>
+                <td>
+                    @Html.Label(Model[i].Nazwa, new { id = Model[i].Nazwa })
+                </td>
+                <td>
+                    @Html.Raw(Model[i].Cena)
+                </td>
+                <td>
+                    @Html.TextBox("listaZamowionychPotraw[" + @i + "].Ilosc", Model[i].Ilosc,new { @class = "ilosc", id="ilosc" + i })
+                </td>
+                <td>
+                    @Html.Label(Model[i].KwotaRazem.ToString(), new { id = Model[i].KwotaRazem ,@class="kwotaRazem"+i})
+
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="4">
+                Suma wszystkich pozycji:
+            </td>
+            <td id="suma">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <input type="submit" value="Submit" />
+            </td>
+        </tr>
+    }
+</table>
+<p>Name: <input type="text" name="user"></p>
+
+<button>Set the value of the input field</button>
+
+<script>
+$(".ilosc").on("change", function () {
+        obliczKwote();
+    });
+    function obliczKwote() {
+        var suma = 0;
+        for (var i = 0; i < @Model.Count(); i++) {
+            var ile = parseFloat($("#ilosc"+i).val());
+            var cena = parseFloat($(".cena"+i).val());
+            var razem = ile * cena;
+            suma += razem;
+            $("#suma").html(suma);
+            $(".kwotaRazem"+i).html(razem);
+        }
+    }
+</script>
