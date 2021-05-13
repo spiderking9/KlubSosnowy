@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,13 +22,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Lista Zamowien", "Index", "MenagerZamowien")</li>
+                    <li>@Html.ActionLink("Lista moich zamowien", "PokazMojeZamowienia", "MenagerZamowien")</li>
                     <li>@Html.ActionLink("Potrawy", "Index", "Potrawy")</li>
                     <li>@Html.ActionLink("Skladniki", "Index", "Skladniki")</li>
                     <li>@Html.ActionLink("Users Roles", "Index", "Account")</li>
-                    <li>@Html.ActionLink("Zamowienia", "Index", "Zamowienia")</li>
+                    <li>@Html.ActionLink("Zamow jedzenie", "Index", "Zamowienia")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

@@ -25,15 +25,15 @@
             Suma
         </th>
     </tr>
-    @using (Html.BeginForm("StatusZamowienia", "Zamowienia", FormMethod.Post))
+    @using (Html.BeginForm("Wyslij", "Zamowienia", FormMethod.Post))
     {
         for (var i = 0; i < Model.Count(); i++)
         {
             <tr>
                 <td>
-                    @Html.Hidden($"listaZamowionychPotraw[{@i}].IdPotrawy", Model[i].IdPotrawy.ToString())
-                    @Html.Hidden($"listaZamowionychPotraw[{@i}].Nazwa", Model[i].Nazwa)
-                    @Html.Hidden($"listaZamowionychPotraw[{@i}].Cena", Model[i].Cena, new { @class = "cena" + Model[i].IdPotrawy.ToString() })
+                    @Html.Hidden($"potrawyZamowienia[{@i}].IdPotrawy", Model[i].IdPotrawy.ToString())
+                    @Html.Hidden($"potrawyZamowienia[{@i}].Nazwa", Model[i].Nazwa)
+                    @Html.Hidden($"potrawyZamowienia[{@i}].Cena", Model[i].Cena, new { @class = "cena" + Model[i].IdPotrawy.ToString() })
 
                     @Html.Label(Model[i].IdPotrawy.ToString(), new { id = $"listaZamowionychPotraw[{@i}].IdPotrawy" })
                 </td>
@@ -44,11 +44,10 @@
                     @Html.Raw(Model[i].Cena)
                 </td>
                 <td>
-                    @Html.TextBox("listaZamowionychPotraw[" + @i + "].Ilosc", Model[i].Ilosc, new { @class = "ilosc", id = "ilosc" + Model[i].IdPotrawy.ToString() })
+                    @Html.TextBox("potrawyZamowienia[" + @i + "].Ilosc", Model[i].Ilosc, new { @class = "ilosc", id = "ilosc" + Model[i].IdPotrawy.ToString() })
                 </td>
                 <td>
-                    @Html.Label(Model[i].KwotaRazem.ToString(), new { id = Model[i].KwotaRazem ,@class="kwotaRazem"+ Model[i].IdPotrawy.ToString() })
-
+                    @Html.Label(Model[i].KwotaRazem.ToString(), new { id = Model[i].KwotaRazem, @class = "kwotaRazem" + Model[i].IdPotrawy.ToString() })
                 </td>
             </tr>
         }
@@ -60,24 +59,31 @@
             </td>
         </tr>
         <tr>
+            <td>
+                <input asp-for="BestellungsDatum" type="date" asp-format="{0:yyyy-MM-dd}" class="form-control" name="date"/>
+            </td>
+        </tr>
+        <tr>
             <td colspan="4">
                 <input type="submit" value="Submit" class="btn-primary btn"/>
             </td>
         </tr>
     }
 </table>
-
 <script>
+    //obliczKwote();
 $(".ilosc").on("change", function () {
         obliczKwote();
     });
     function obliczKwote() {
         var suma = 0;
         var model =@Html.Raw(Json.Encode(Model));
-
-        for (var i = 0; i < model.length; i++) {
+        console.log(model);
+        for(var i = 0; i < model.length; i++) {
             var ile = parseFloat($("#ilosc" + model[i].IdPotrawy).val());
             var cena = parseFloat($(".cena" + model[i].IdPotrawy).val());
+            console.log(ile);
+            console.log(cena);
             var razem = ile * cena;
             suma += razem;
             $("#suma").html(suma);

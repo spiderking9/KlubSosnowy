@@ -1,0 +1,42 @@
+﻿@model List<KlubSosnowy.Models.ViewModel.PotrawyZamowieniaViewModel>
+
+@{
+    ViewBag.Title = "Szczegoly Zamowienia";
+}
+
+<h2>Zamow nr @ViewBag.IdZamowienia</h2>
+<a href="@Url.Action("PokazMojeZamowienia","MenagerZamowien")" type="button" class="btn-primary btn">Cofnij</a>
+<table class="table">
+    <tr>
+        <th>
+            IdPotrawy
+        </th>
+        <th>
+            Nazwa
+        </th>
+        <th>
+            Cena
+        </th>
+        <th>
+            Ilosc
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.IdPotrawy
+            </td>
+            <td>
+                @item.Nazwa
+            </td>
+            <td>
+                @item.Cena
+            </td>
+            <td>
+                @item.Ilosc
+            </td>
+        </tr>
+    }
+</table>

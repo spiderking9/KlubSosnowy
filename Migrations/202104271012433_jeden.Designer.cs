@@ -7,13 +7,13 @@ namespace KlubSosnowy.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class xxx : IMigrationMetadata
+    public sealed partial class jeden : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(xxx));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(jeden));
         
         string IMigrationMetadata.Id
         {
-            get { return "202104131357561_xxx"; }
+            get { return "202104271012433_jeden"; }
         }
         
         string IMigrationMetadata.Source

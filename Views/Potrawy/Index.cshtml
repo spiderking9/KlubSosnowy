@@ -29,9 +29,9 @@
             @Html.DisplayFor(modelItem => item.Cena)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdPotrawy }) |
-            @Html.ActionLink("EdytujPotrawe", "EdytujPotrawe", new { id=item.IdPotrawy }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdPotrawy })
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdPotrawy }, new { @class = "btn-primary btn" }) |
+            @Html.ActionLink("EdytujPotrawe", "EdytujPotrawe", new { id=item.IdPotrawy }, new { @class = "btn-success btn" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdPotrawy }, new { @class = "btn-primary btn" })
         </td>
     </tr>
 }

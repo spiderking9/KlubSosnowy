@@ -1,4 +1,4 @@
-﻿@model IEnumerable<KlubSosnowy.Models.ApplicationUser>
+﻿@model IEnumerable<KlubSosnowy.Models.ViewModel.UsersRolesViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -10,34 +10,32 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Id)
+            @Html.DisplayNameFor(model => model.IdUser)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Roles)
+            @Html.DisplayNameFor(model => model.Role)
         </th>
-        @*<th></th>*@
+        <th>Zmien role</th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @Html.DisplayFor(modelItem => item.IdUser)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
                         <td>
-                @Html.DisplayFor(modelItem => item.Roles.Count)
+                @Html.DisplayFor(modelItem => item.Role)
             </td>
-            @*<td> tutaj bedzie dodawanie i odejmowanie roli uzytkownika
-                @Html.ActionLink("Edit", "Edit", new { id = item.IdPotrawy }) |
-                @Html.ActionLink("EdytujPotrawe", "EdytujPotrawe", new { id = item.IdPotrawy }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.IdPotrawy })
-            </td>*@
+            <td>
+                <a href="@Url.Action("ZmienRole",new {id=item.IdUser})" type="button" class="btn-primary btn">Zmien/Dodaj Role</a>
+            </td>
         </tr>
     }
 

@@ -12,10 +12,11 @@ using KlubSosnowy.Models;
 
 namespace KlubSosnowy.Controllers
 {
+    [Authorize(Roles = "Admin,Kucharz")]
     public class PotrawyController : Controller
     {
-        private ZamowieniaContext db = new ZamowieniaContext();
-
+        private readonly ZamowieniaContext db = new ZamowieniaContext();
+        [AllowAnonymous]
         // GET: Potrawy
         public ActionResult Index()
         {

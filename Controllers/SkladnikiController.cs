@@ -10,6 +10,7 @@ using KlubSosnowy.Models;
 
 namespace KlubSosnowy.Controllers
 {
+    [Authorize(Roles = "Admin,Kucharz")]
     public class SkladnikiController : Controller
     {
         private ZamowieniaContext db = new ZamowieniaContext();

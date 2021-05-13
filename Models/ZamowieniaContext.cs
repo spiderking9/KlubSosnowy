@@ -15,9 +15,9 @@ namespace KlubSosnowy.Models
             return new ZamowieniaContext();
         }
         public DbSet<Potrawy> Potrawy { get; set; }
-        public DbSet<Potrawy_Skladniki> Potrawy_Skladniki { get; set; }
-        public DbSet<PozycjeZamowienia> PozycjeZamowienia { get; set; }
         public DbSet<Skladniki> Skladniki { get; set; }
+        public DbSet<Potrawy_Skladniki> Potrawy_Skladniki { get; set; }
         public DbSet<Zamowienia> Zamowienia { get; set; }
+        public DbSet<PozycjeZamowienia> PozycjeZamowienia { get; set; }
     }
 }

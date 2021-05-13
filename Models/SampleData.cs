@@ -1,4 +1,6 @@
 ﻿using KlubSosnowy.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -34,6 +36,71 @@ namespace KlubSosnowy.Models
                 new Skladniki { Nazwa = "Sól", JednostkaMiary="kg" }
             });
             context.SaveChanges();
+
+
+            #region ROLE
+            var roleStore = new RoleStore<IdentityRole>(context);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+            var rolaAdmin = new IdentityRole { Name = "Admin" };
+            roleManager.Create(rolaAdmin);
+            //var rolaZakupowiec = new IdentityRole { Name = "Zakupowiec" };
+            //roleManager.Create(rolaZakupowiec);
+            //var rolaKucharz = new IdentityRole { Name = "Kucharz" };
+            //roleManager.Create(rolaKucharz);
+            context.SaveChanges();
+            #endregion
+
+            #region Konto Administratora
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            string haslo = "Sh!ft3891";
+            string email = "admin@klubsosnowy.com";
+            ApplicationUser uzytkownik = new ApplicationUser()
+            {
+                UserName = email,
+                Email = email,
+                EmailConfirmed = true,
+            };
+            if (userManager.Create(uzytkownik, haslo).Succeeded)
+            {
+                userManager.AddToRole(uzytkownik.Id, "Admin");
+            }
+            context.SaveChanges();
+            #endregion
+
+            //#region Konto Zakupowca
+            //string hasloZakupowiec = "zakupowiec";
+            //string emailZakupowiec = "zakupowiec@klubsosnowy.com";
+            //ApplicationUser uzytkownikZakupowiec = new ApplicationUser()
+            //{
+            //    UserName = emailZakupowiec,
+            //    Email = emailZakupowiec,
+            //    EmailConfirmed = true,
+            //};
+            //if (userManager.Create(uzytkownikZakupowiec, hasloZakupowiec).Succeeded)
+            //{
+            //    userManager.AddToRole(uzytkownik.Id, "Zakupowiec");
+            //}
+            //context.SaveChanges();
+            //#endregion
+
+
+            //#region Konto Kucharza
+            //string hasloKucharza = "kucharz";
+            //string emailKucharz = "kucharz@klubsosnowy.com";
+            //ApplicationUser uzytkownikKucharz = new ApplicationUser()
+            //{
+            //    UserName = emailKucharz,
+            //    Email = emailKucharz,
+            //    EmailConfirmed = true,
+            //};
+            //if (userManager.Create(uzytkownikKucharz, hasloKucharza).Succeeded)
+            //{
+            //    userManager.AddToRole(uzytkownik.Id, "Kucharz");
+            //}
+            //context.SaveChanges();
+            //#endregion
+
         }
     }
 }

@@ -1,0 +1,18 @@
+﻿@using KlubSosnowy.Helpers
+
+<hr>
+
+@using (Html.BeginForm("Index", "Sklep"))
+{
+    <center>Wybierz @Html.DropDownList("Lista", (IEnumerable<SelectListItem>)ViewBag.Lista, new { @class = "form-control" })</center>
+    <input type="submit" value="Submit" class="btn-primary btn" />
+}
+
+<div class="form-group">
+    @Html.Label("After", new { @class = "col-md-2 control-label" })
+    <div class="col-md-10">
+
+        @DropDownWithBotstrap.Dropdown("dropdownMenu1", (List<SelectListItem>) ViewBag.Lista, "Dropdown")
+
+    </div>
+</div>

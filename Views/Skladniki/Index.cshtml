@@ -29,9 +29,9 @@
             @Html.DisplayFor(modelItem => item.JednostkaMiary)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdSkladnika }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdSkladnika }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdSkladnika })
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdSkladnika }, new { @class="btn-primary btn" }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdSkladnika }, new { @class = "btn-success btn" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdSkladnika }, new { @class = "btn-primary btn" })
         </td>
     </tr>
 }

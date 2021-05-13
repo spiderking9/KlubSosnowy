@@ -14,11 +14,12 @@ using System.Collections.Generic;
 
 namespace KlubSosnowy.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly ZamowieniaContext db = new ZamowieniaContext();
 
 
         public AccountController()
@@ -54,25 +55,50 @@ namespace KlubSosnowy.Controllers
                 _userManager = value;
             }
         }
+
+
+        [AllowAnonymous]
+        public ActionResult NieJestesZalogowany()
+        {
+            return View();
+        }
         //
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Index()
         {
-            ZamowieniaContext db = new ZamowieniaContext();
-            var xxx = db.Users.ToList();
 
-            List<UsersRolesViewModel> listaUzytkownikow = (from u in db.Users
-                                                           from ur in u.Roles
-                                                           join r in db.Roles 
-                                                           on ur.RoleId equals r.Id
-                                                           select new UsersRolesViewModel
+
+            List<UsersRolesViewModel> listaUzytkownikow = (from user in db.Users
+                                                           select new 
                                                            {
-                                                               IdUser=u.Id,
-                                                               Email=u.Email,
-                                                               Role=r.Name
+                                                               IdUser = user.Id,
+                                                               Email = user.Email,
+                                                               Role = (from userRole in user.Roles
+                                                                            join role in db.Roles on userRole.RoleId
+                                                                            equals role.Id
+                                                                            select role.Name).ToList()
+                                                           }).ToList().Select(p => new UsersRolesViewModel()
+
+                                                           {
+                                                               IdUser = p.IdUser,
+                                                               Email = p.Email,
+                                                               Role = string.Join(",", p.Role).Length > 0 ? string.Join(",", p.Role) : "-"
                                                            }).ToList();
-            return View(xxx);
+            return View(listaUzytkownikow);
+        }
+
+        public ActionResult ZmienRole(string id)
+        {
+            ViewBag.IdZamowienia = id;
+            ViewBag.Lista = (from x in db.Roles
+                             select new SelectListItem
+                             {
+                                 Text = x.Name,
+                                 Value = x.Id
+                             }
+                             ).ToList();
+            return View();
         }
         //
         // GET: /Account/Login
@@ -105,7 +131,7 @@ namespace KlubSosnowy.Controllers
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
@@ -336,7 +362,7 @@ namespace KlubSosnowy.Controllers
             {
                 return View("Error");
             }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
+            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe });
         }
 
         //
